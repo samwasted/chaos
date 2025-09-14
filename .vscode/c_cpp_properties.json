@@ -3,7 +3,8 @@
         {
             "name": "Linux",
             "includePath": [
-                "${workspaceFolder}/**"
+                "${workspaceFolder}/src",       // only my source tree
+                "${workspaceFolder}/include"    // if you keep headers separate
             ],
             "defines": [],
             "compilerPath": "/usr/bin/clang",
@@ -15,17 +16,25 @@
         {
             "name": "Watcom",
             "includePath": [
-                "${workspaceFolder}/**"
+                "${workspaceFolder}/src",
+                "${workspaceFolder}/include"
             ],
             "defines": [
-                "_cdecl="
+                "_cdecl=",   // make VS Code accept`_cdecl` keyword
+                "printf=printf" // overrides system printf so no red squiggle, didnt work btw
             ],
             "compilerPath": "/usr/bin/watcom/binl/wcc",
             "cStandard": "c99",
             "cppStandard": "c++17",
             "intelliSenseMode": "linux-clang-x64",
             "compilerArgs": [
-                "-4 -d3 -s -wx -ms -zl -zq"
+                "-4",
+                "-d3",
+                "-s",
+                "-wx",
+                "-ms",
+                "-zl",
+                "-zq"
             ]
         }
     ],
