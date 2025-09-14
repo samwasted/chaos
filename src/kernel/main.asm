@@ -1,10 +1,18 @@
-org 0x7C00
+org 0x0
 bits 16
+
 
 %define ENDL 0x0D, 0x0A
 
+
 start:
-    jmp main
+    ; print hello world message
+    mov si, msg_hello
+    call puts
+
+.halt:
+    cli
+    hlt
 
 ;
 ; Prints a string to the screen
@@ -12,17 +20,18 @@ start:
 ;   - ds:si points to string
 ;
 puts:
+    ; save registers we will modify
     push si
     push ax
     push bx
 
 .loop:
-    lodsb               ; AL = [DS:SI], SI++
-    or al, al
+    lodsb               ; loads next character in al
+    or al, al           ; verify if next character is null?
     jz .done
 
-    mov ah, 0x0E        ; teletype BIOS
-    mov bh, 0
+    mov ah, 0x0E        ; call bios interrupt
+    mov bh, 0           ; set page number to 0
     int 0x10
 
     jmp .loop
@@ -30,33 +39,7 @@ puts:
 .done:
     pop bx
     pop ax
-    pop si
+    pop si    
     ret
 
-main:
-    ; setup data segments
-    xor ax, ax
-    mov ds, ax
-    mov es, ax
-
-    ; setup stack (leave some room so pushes don't clobber code)
-    mov ss, ax
-    mov sp, 0x7A00      ; safer: stack at 0x0000:0x7A00 (leaves 0x200 bytes)
-
-    ; print hello world message
-    mov si, msg_hello
-    call puts
-
-    cli
-    hlt
-
-.halt:
-    cli
-.halt_loop:
-    hlt
-    jmp .halt_loop
-
-msg_hello: db 'Hello world!', ENDL, 0
-
-times 510-($-$$) db 0
-dw 0AA55h
+msg_hello: db 'Hello world from KERNEL!', ENDL, 0
