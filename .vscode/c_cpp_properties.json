@@ -3,8 +3,7 @@
         {
             "name": "Linux",
             "includePath": [
-                "${workspaceFolder}/src",       // only my source tree
-                "${workspaceFolder}/include"    // if you keep headers separate
+                "${workspaceFolder}/src"     // only my source tree 
             ],
             "defines": [],
             "compilerPath": "/usr/bin/clang",
@@ -16,8 +15,7 @@
         {
             "name": "Watcom",
             "includePath": [
-                "${workspaceFolder}/src",
-                "${workspaceFolder}/include"
+                "${workspaceFolder}/src"
             ],
             "defines": [
                 "_cdecl=",   // make VS Code accept`_cdecl` keyword
