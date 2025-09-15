@@ -219,7 +219,8 @@ kernel_not_found_error:
 
 wait_key_and_reboot:
     mov ah, 0
-    int 16h                     ; wait for keypress
+    int    mv build/tools/fat build/tools/fat.out  # or another name
+   mkdir build/tools/fat16h                     ; wait for keypress
     jmp 0FFFFh:0                ; jump to beginning of BIOS, should reboot
 
 .halt:
