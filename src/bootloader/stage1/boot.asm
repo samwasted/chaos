@@ -49,6 +49,7 @@ start:
 
     ; some BIOSes might start us at 07C0:0000 instead of 0000:7C00, make sure we are in the
     ; expected location
+    ; 0x01
     push es
     push word .after
     retf
@@ -67,6 +68,7 @@ start:
     ; instead of relying on data on formatted disk
     push es
     mov ah, 08h
+    ; 0x02
     int 13h
     jc floppy_error
     pop es
@@ -274,7 +276,7 @@ lba_to_chs:
 
     push ax
     push dx
-
+    ; 0x04
     xor dx, dx                          ; dx = 0
     div word [bdb_sectors_per_track]    ; ax = LBA / SectorsPerTrack
                                         ; dx = LBA % SectorsPerTrack
